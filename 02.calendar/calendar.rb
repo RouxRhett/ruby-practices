@@ -33,7 +33,7 @@ opt.on('-y [VAL]') {|v|
       # p "vは1~9999"
       show_year = v.to_i
     else
-      # p "vは1~12ちゃうで"
+      # p "vは1~9999ちゃうで"
       puts __FILE__ + ": year `" + v.to_s + "' not in range 1..9999"
       exit 1
     end
