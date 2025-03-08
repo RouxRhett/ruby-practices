@@ -1,22 +1,60 @@
 #!/usr/bin/env ruby
-# dateを使うために必要なライブラリ
+
+# ライブラリ
 require 'date'
+require 'optparse'
 
 pick_today = Date.today
+show_month = pick_today.month
+show_year  = pick_today.year
+m_na_flag  = false
+y_na_flag  = false
 
-# 挙動確認
-# print pick_today.year
-# print pick_today.month
-# print pick_today.day
-# p pick_today.cwday # 初期位置判定に使う
-init_pos = pick_today.cwday # 初期位置判定に使う
+opt = OptionParser.new
+
+opt.on('-m [VAL]') {|v|
+  if(v =~ /^[0-9]+$/)
+    if(1 <= v.to_i && v.to_i <= 12)
+      # p "vは1~12"
+      show_month = v.to_i
+    else
+      # p "vは1~12ちゃうで"
+      m_na_flag = true
+    end
+  else
+    # p "整数でない"
+    m_na_flag = true
+  end
+}
+
+opt.on('-y [VAL]') {|v|
+  if(v =~ /^[0-9]+$/)
+    if(0 < v.to_i && v.to_i < 10000)
+      # p "vは1~9999"
+      show_year = v.to_i
+    else
+      # p "vは1~12ちゃうで"
+      y_na_flag = true
+    end
+  else
+    # p "整数でない"
+    y_na_flag = true
+  end
+}
+
+opt.parse!(ARGV)
+
+
+show_cal = Date.new(show_year, show_month, pick_today.day)
+
+init_pos = show_cal.cwday # 初期位置判定に使う
 cur_pos = init_pos # ループ用位置判定に使う
-get_month_lastday  = Date.new(pick_today.year, pick_today.month, -1)
+get_month_lastday  = Date.new(show_cal.year, show_cal.month, -1)
 
 def day_print(day)
   print sprintf("%2s", day)
 end
-puts "      " << pick_today.month.to_s << "月 " << pick_today.year.to_s
+puts "      " << show_cal.month.to_s << "月 " << show_cal.year.to_s
 puts "日 月 火 水 木 金 土  "
 
 if(init_pos != 7)
