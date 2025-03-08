@@ -47,15 +47,19 @@ opt.on('-y [VAL]') {|v|
 opt.parse!(ARGV)
 
 show_cal = Date.new(show_year, show_month, pick_today.day)
-
+check_today_exist = (pick_today.year == show_cal.year && pick_today.month == show_cal.month)
 init_pos = show_cal.cwday # 初期位置判定に使う
 cur_pos = init_pos # ループ用位置判定に使う
 get_month_lastday  = Date.new(show_cal.year, show_cal.month, -1)
 
-def day_print(day)
+def day_print(today_exist ,day, show)
+  if(today_exist == true && day == show.day)
   print ("\e[7m")
   print sprintf("%2s", day)
   print ("\e[0m")
+  else
+    print sprintf("%2s", day)
+  end
 end
 puts "      " << show_cal.month.to_s << "月 " << show_cal.year.to_s
 puts "日 月 火 水 木 金 土  "
@@ -68,11 +72,12 @@ end
 
 (1..get_month_lastday.day).each { |i|
   if((cur_pos+1)%7==0)
-    day_print(i)
+    day_print(check_today_exist,i,show_cal)
     puts "  "
   else
-    day_print(i)
+    day_print(check_today_exist,i,show_cal)
     print " "
   end
   cur_pos += 1
 }
+puts ""

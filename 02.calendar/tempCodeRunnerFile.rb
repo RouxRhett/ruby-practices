@@ -1,1 +1,0 @@
-("\e[7m" + day.to_s + "\e[0m").rjust(2)
