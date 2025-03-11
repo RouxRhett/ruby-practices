@@ -22,14 +22,13 @@ scores.each do |s|
   end
   throw_count += 1
 end
-p throw_count
-p shots
+
 # 二次元配列に格納する(1フレーム[1投目,2投目],...),[[6, 3], [9, 0], [0, 3], [8, 2], [7, 3],...
 frames = []
 shots.each_slice(2) do |s|
   frames << s
 end
-p frames
+
 if throw_count == 21
   frames[9].push(frames[10]).flatten!
   frames.pop
