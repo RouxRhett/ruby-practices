@@ -30,21 +30,29 @@ shots.each_slice(2) do |s|
   frames << s
 end
 p frames
-if(throw_count == 21)
-  p "10Fは3投"
+if throw_count == 21
   frames[9].push(frames[10]).flatten!
   frames.pop
-  p frames
 end
 
-# point = 0
-# frames.each do |frame|
-#   point += if frame[0] == 10 # strike
-#              30
-#            elsif frame.sum == 10 # spare
-#              frame[0] + 10
-#            else
-#              frame.sum
-#            end
-# end
-# puts point
+point = 0
+n_frame_count = 0
+frames.each do |frame|
+  n_frame_count += 1
+  point += if n_frame_count != 10
+             if frame[0] == 10 # strike
+               if frames[n_frame_count][0] == 10 && n_frame_count != 9
+                 frame[0] + frames[n_frame_count][0] + frames[n_frame_count + 1][0]
+               else
+                 frame[0] + frames[n_frame_count][0] + frames[n_frame_count][1]
+               end
+             elsif frame.sum == 10 # spare
+               frame.sum + frames[n_frame_count][0]
+             else
+               frame.sum
+             end
+           else
+             frame.sum
+           end
+end
+puts point
