@@ -52,7 +52,7 @@ init_pos = display_calendar.cwday # 初期位置判定に使う
 cur_pos = init_pos # ループ用位置判定に使う
 get_month_lastday  = Date.new(display_calendar.year, display_calendar.month, -1)
 
-def day_print(today_exist, day, show)
+def print_day(today_exist, day, show)
   if today_exist == true && day == show.day
     print("\e[7m")
     print format('%2s', day)
@@ -72,10 +72,10 @@ end
 
 (1..get_month_lastday.day).each do |i|
   if (cur_pos + 1) % 7 == 0
-    day_print(check_today_exist, i, display_calendar)
+    print_day(check_today_exist, i, display_calendar)
     puts '  '
   else
-    day_print(check_today_exist, i, display_calendar)
+    print_day(check_today_exist, i, display_calendar)
     print ' '
   end
   cur_pos += 1
