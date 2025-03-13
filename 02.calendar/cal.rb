@@ -46,11 +46,14 @@ end
 
 opt.parse!(ARGV)
 
-display_calendar = Date.new(show_year, show_month, pick_today.day)
-check_today_exist = pick_today.year == display_calendar.year && pick_today.month == display_calendar.month
-init_pos = display_calendar.cwday # 初期位置判定に使う
-cur_pos = init_pos # ループ用位置判定に使う
+display_calendar   = Date.new(show_year, show_month, pick_today.day)
+check_today_exist  = pick_today.year == display_calendar.year && pick_today.month == display_calendar.month
+
+# 初期位置判定を表示月1日に指定するために定義
+get_month_firstday = Date.new(display_calendar.year, display_calendar.month, 1)
 get_month_lastday  = Date.new(display_calendar.year, display_calendar.month, -1)
+init_pos = get_month_firstday.cwday # 初期位置判定に使う
+cur_pos = init_pos # ループ用位置判定に使う
 
 def print_day(today_exist, day, show)
   if today_exist == true && day == show.day
@@ -71,11 +74,10 @@ if init_pos != 7
 end
 
 (1..get_month_lastday.day).each do |i|
+  print_day(check_today_exist, i, display_calendar)
   if (cur_pos + 1) % 7 == 0
-    print_day(check_today_exist, i, display_calendar)
     puts '  '
   else
-    print_day(check_today_exist, i, display_calendar)
     print ' '
   end
   cur_pos += 1
