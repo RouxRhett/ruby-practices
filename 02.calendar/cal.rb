@@ -17,12 +17,12 @@ opt.on('-m [VAL]') do |v|
       show_month = v.to_i
     else
       # p "vは1~12ちゃうで"
-      puts __FILE__ + ': ' + v.to_s + ' is neither a month number (1..12) nor a name'
+      puts "#{__FILE__}: #{v} is neither a month number (1..12) nor a name"
       exit 1
     end
   else
     # p "整数でない"
-    puts __FILE__ + ': ' + v.to_s + ' is neither a month number (1..12) nor a name'
+    puts "#{__FILE__}: #{v} is neither a month number (1..12) nor a name"
     exit 1
   end
 end
@@ -34,12 +34,12 @@ opt.on('-y [VAL]') do |v|
       show_year = v.to_i
     else
       # p "vは1~9999ちゃうで"
-      puts __FILE__ + ': year `' + v.to_s + "' not in range 1..9999"
+      puts "#{__FILE__}: year `#{v}' not in range 1..9999"
       exit 1
     end
   else
     # p "整数でない"
-    puts __FILE__ + ': year `' + v.to_s + "' not in range 1..9999"
+    puts "#{__FILE__}: year `#{v}' not in range 1..9999"
     exit 1
   end
 end
