@@ -7,11 +7,18 @@ score = ARGV[0]
 scores = score.split(',')
 shots = []
 
+module NORMAL
+  FRAME = 9
+  THROW = 2
+  MAX_THROW = 3
+  TOTAL_MAX_THROW = FRAME * THROW + MAX_THROW
+end
+
 # ストライク分を[10,0]に変換、その他も文字列から値に変換
 scores.each do |s|
   if s == 'X' # strike
     shots << 10
-    shots << nil if shots.size < 18 # 1~9F時(1F=2count)
+    shots << nil if shots.size < NORMAL::FRAME * NORMAL::THROW # 1~9F時(1F=2count)
   else
     shots << s.to_i
   end
@@ -20,7 +27,7 @@ end
 # 二次元配列に格納する(1フレーム[1投目,2投目],...),[[6, 3], [9, 0], [0, 3], [8, 2], [7, 3],...
 frames = shots.each_slice(2).to_a
 
-if shots.size == 21
+if shots.size == NORMAL::TOTAL_MAX_THROW
   frames[9].push(frames[10]).flatten!
   frames.pop
 end
