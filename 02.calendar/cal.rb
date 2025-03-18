@@ -12,7 +12,7 @@ opt = OptionParser.new
 
 opt.on('-m [VAL]') do |v|
   if /^[0-9]+$/.match?(v)
-    if 1 <= v.to_i && v.to_i <= 12
+    if v.to_i.positive? && v.to_i <= 12
       # p "vは1~12"
       show_month = v.to_i
     else
@@ -29,7 +29,7 @@ end
 
 opt.on('-y [VAL]') do |v|
   if /^[0-9]+$/.match?(v)
-    if 0 < v.to_i && v.to_i < 10_000
+    if v.to_i.positive? && v.to_i < 10_000
       # p "vは1~9999"
       show_year = v.to_i
     else
