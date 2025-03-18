@@ -36,14 +36,15 @@ end
 point = frames.each_with_index.sum do |frame, index|
   score_in_frame = 0
   if index != NORMAL::FRAME
+    next_first_throw = frames[index + 1][0]
     if frame[0] == 10
-      score_in_frame = if frames[index + 1][0] == 10 && index != NORMAL::FRAME_FOR_INDEX
-                         frames[index + 1][0] + frames[index + 2][0]
+      score_in_frame = if next_first_throw == 10 && index != NORMAL::FRAME_FOR_INDEX
+                         next_first_throw + frames[index + 2][0]
                        else
-                         frames[index + 1][0] + frames[index + 1][1]
+                         next_first_throw + frames[index + 1][1]
                        end
     elsif frame.sum == 10
-      score_in_frame = frames[index + 1][0]
+      score_in_frame = next_first_throw
     end
   end
   score_in_frame + frame.compact.sum
