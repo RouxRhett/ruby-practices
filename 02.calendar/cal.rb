@@ -53,7 +53,6 @@ check_today_exist  = pick_today.year == display_calendar.year && pick_today.mont
 get_month_firstday = Date.new(display_calendar.year, display_calendar.month, 1)
 get_month_lastday  = Date.new(display_calendar.year, display_calendar.month, -1)
 init_pos = get_month_firstday.cwday # 初期位置判定に使う
-cur_pos = init_pos # ループ用位置判定に使う
 
 def print_day(today_exist, day, show)
   if today_exist == true && day == show.day
@@ -64,7 +63,8 @@ def print_day(today_exist, day, show)
     print format('%2s', day)
   end
 end
-puts '      ' << display_calendar.month.to_s << '月 ' << display_calendar.year.to_s
+# 式展開に書き方を合わせた
+puts "      #{display_calendar.month}月 #{display_calendar.year}"
 puts '日 月 火 水 木 金 土  '
 
 if init_pos != 7
@@ -73,13 +73,12 @@ if init_pos != 7
   end
 end
 
-(1..get_month_lastday.day).each do |i|
-  print_day(check_today_exist, i, display_calendar)
-  if (cur_pos + 1) % 7 == 0
+(get_month_firstday..get_month_lastday).each do |date|
+  print_day(check_today_exist, date.day, display_calendar)
+  if date.saturday?
     puts '  '
   else
     print ' '
   end
-  cur_pos += 1
 end
 puts ''
