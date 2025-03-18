@@ -9,6 +9,7 @@ shots = []
 
 module NORMAL
   FRAME = 9
+  FRAME_FOR_INDEX = FRAME - 1
   THROW = 2
   MAX_THROW = 3
   TOTAL_MAX_THROW = FRAME * THROW + MAX_THROW
@@ -32,34 +33,20 @@ if shots.size == NORMAL::TOTAL_MAX_THROW
   frames.pop
 end
 
-# point = 0
-# n_frame_count = 0
-# frames.each do |frame|
-#   n_frame_count += 1
-#   point += if n_frame_count != 10
-#              if frame[0] == 10 # strike
-#                if frames[n_frame_count][0] == 10 && n_frame_count != 9
-#                  frame[0] + frames[n_frame_count][0] + frames[n_frame_count + 1][0]
-#                else
-#                  frame[0] + frames[n_frame_count][0] + frames[n_frame_count][1]
-#                end
-#              elsif frame.sum == 10 # spare
-#                frame.sum + frames[n_frame_count][0]
-#              else
-#                frame.sum
-#              end
-#            else
-#              frame.sum
-#            end
-# end
-
 point = frames.each_with_index.sum do |frame, index|
-  p index
-  p frame
-  if frame[0] == 10
-    frame[0]
-  else
-    frame.sum
+  score_in_frame = 0
+  if index != NORMAL::FRAME
+    if frame[0] == 10
+      score_in_frame = if frames[index + 1][0] == 10 && index != NORMAL::FRAME_FOR_INDEX
+                         frames[index + 1][0] + frames[index + 2][0]
+                       else
+                         frames[index + 1][0] + frames[index + 1][1]
+                       end
+    elsif frame.sum == 10
+      score_in_frame = frames[index + 1][0]
+    end
   end
+  score_in_frame + frame.compact.sum
 end
-puts point
+
+p point
