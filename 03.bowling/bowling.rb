@@ -17,7 +17,7 @@ TOTAL_MAX_THROW = FRAME * THROW + MAX_THROW
 scores.each do |s|
   if s == 'X' # strike
     shots << 10
-    shots << nil if shots.size < FRAME * THROW # 1~9F時(1F=2count)
+    shots << 0 if shots.size < FRAME * THROW # 1~9F時(1F=2count)
   else
     shots << s.to_i
   end
@@ -45,7 +45,7 @@ point = frames.each_with_index.sum do |frame, index|
       score_in_frame = next_first_throw
     end
   end
-  score_in_frame + frame.compact.sum
+  score_in_frame + frame.sum
 end
 
 p point
