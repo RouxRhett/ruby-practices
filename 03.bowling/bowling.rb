@@ -48,4 +48,4 @@ point = frames.each_with_index.sum do |frame, index|
   score_in_frame + frame.sum
 end
 
-p point
+puts point
