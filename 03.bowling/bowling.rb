@@ -36,11 +36,12 @@ point = frames.each_with_index.sum do |frame, index|
   if index != FRAME
     next_first_throw = frames[index + 1][0]
     if frame[0] == 10
-      score_in_frame = if next_first_throw == 10 && index != FRAME_FOR_INDEX
-                         next_first_throw + frames[index + 2][0]
-                       else
-                         next_first_throw + frames[index + 1][1]
-                       end
+      score_in_frame = next_first_throw
+      score_in_frame += if next_first_throw == 10 && index != FRAME_FOR_INDEX
+                          frames[index + 2][0]
+                        else
+                          frames[index + 1][1]
+                        end
     elsif frame.sum == 10
       score_in_frame = next_first_throw
     end
