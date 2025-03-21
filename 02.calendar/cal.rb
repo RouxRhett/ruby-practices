@@ -51,7 +51,6 @@ display_calendar   = Date.new(show_year, show_month, pick_today.day)
 # 初期位置判定を表示月1日に指定するために定義
 get_month_firstday = Date.new(display_calendar.year, display_calendar.month, 1)
 get_month_lastday  = Date.new(display_calendar.year, display_calendar.month, -1)
-init_pos = get_month_firstday.cwday # 初期位置判定に使う
 
 def print_day(date)
   if date == Date.today
@@ -66,11 +65,10 @@ end
 puts "      #{display_calendar.month}月 #{display_calendar.year}"
 puts '日 月 火 水 木 金 土  '
 
-if init_pos != 7
-  init_pos.times do
-    print '   '
-  end
+get_month_firstday.wday.times do
+  print '   '
 end
+
 
 (get_month_firstday..get_month_lastday).each do |date|
   print_day(date)
